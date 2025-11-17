@@ -467,20 +467,31 @@ $(function(){
 
                 }else{
 
-                    var data = $('#formKemaskiniPekerja').serializeArray();
-                    console.log("data", data)
+                    var formData = $('#formKemaskiniPekerja').serializeArray();
+                    
+                    var statusExists = formData.some(function(item) {
+                        return item.name === 'eStatus';
+                    });
+                    
+                    // If checkbox is unchecked, add eStatus with value 0
+                    if (!statusExists) {
+                        formData.push({name: 'eStatus', value: '0'});
+                    }
+                
+                    console.log("data", formData);
+
 
                     $.ajax({
                     url: '/kemaskini-maklumat',
                     type: 'POST',
-                    data: data,
+                    data: formData,
                     success: function(data){
                             toastr.success('Maklumat Berjaya dikemaskini');
                         }
                     });
                     setTimeout( function () {
                     window.location.reload(true);
-                    }, 1400);
+                    }, 140000);
                 }
             }
         });
@@ -597,10 +608,10 @@ $(function(){
         $('#eStatus').change(function() {
             if ($(this).is(':checked')) {
                 $('#eStatusText').text('Aktif');
-                // $('#is_active').val('1');
+                $('#eStatus').val('1');
             } else {
                 $('#eStatusText').text('Tidak Aktif');
-                // $('#is_active').val('0');
+                $('#eStatus').val('0');
             }
         });
     });

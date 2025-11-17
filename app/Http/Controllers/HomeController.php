@@ -92,28 +92,18 @@ class HomeController extends Controller
         $eType = $input['eType'];
         $eStart = $input['eStart'];
         $eEnd = $input['eEnd'] ?? NULL;
+        $eStatus = $input['eStatus'] ?? 0; // Default to 0 if not provided
 
-        if ($eType == "KONTRAK") {
-    
-            $user = Employee::where('empID', $eidEMP)->update([
-                    'email' =>  $email,
-                    'contract_type' => $eType,
-                    'start_date' => $eStart,
-                    'end_date' => $eEnd,
-                    'updated_at' => NOW(),
-            ]);
+        $updateData = [
+            'email' => $email,
+            'contract_type' => $eType,
+            'start_date' => $eStart,
+            'end_date' => ($eType == "KONTRAK") ? $eEnd : NULL,
+            'status' => $eStatus, // Add this line
+            'updated_at' => NOW(),
+        ];
 
-        } else {
-
-            $user = Employee::where('empID', $eidEMP)->update([
-                    'email' =>  $email,
-                    'contract_type' => $eType,
-                    'start_date' => $eStart,
-                    'end_date' => NULL,
-                    'updated_at' => NOW(),
-            ]);
-
-        }
+        Employee::where('empID', $eidEMP)->update($updateData);
 
         return response()->json(['success' => 'Data Submitted Successfully']);
     }

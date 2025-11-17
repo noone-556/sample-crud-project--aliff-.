@@ -16,14 +16,16 @@ This project is to show the crud operation using Laravel. This operation is to r
 
 
 4. Run `composer install`
+    - If getting an error `composer not found` then you need to manually download the composer at this link https://getcomposer.org/download/  
+    - After finish then restart your notebook and run back the command
 
 5. Run `php artisan key:generate`
 
-4. Run `php artisan create:db`
+6. Run `php artisan create:db`
 
-5. Run `php artisan migrate` 
+7. Run `php artisan migrate` 
 
-6. Run `php artisan serve`
+8. Run `php artisan serve`
 
 
 ### Download xampp 8.1.25

@@ -60,7 +60,7 @@
                 <td>Status:</td>
                 <td colspan="2" style="width:70%" id="statusDaerah">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="eStatus">
+                        <input class="form-check-input" type="checkbox" id="eStatus"  name="eStatus" value="1">
                         <b><label class="form-check-label" for="eStatus" id="eStatusText">
                             Tidak Aktif
                         </label></b>
