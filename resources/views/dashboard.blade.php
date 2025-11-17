@@ -253,6 +253,7 @@ $(function(){
     $("#tableSenarai").on("click", ".lihatMaklumatModal", function(){
 
         var id = $(this).attr('data-id');
+        console.log("id lihat ", id);
 
     $.ajax({
         url: '/disp-maklumat',
@@ -263,10 +264,10 @@ $(function(){
         },
         success: function(data) {
 
-            console.log("Raw data:", data);
-            console.log("Data type:", typeof data);
-            console.log("First element:", data[0]);
-            console.log("Name value:", data[0]['name']);
+            // console.log("Raw data:", data);
+            // console.log("Data type:", typeof data);
+            // console.log("First element:", data[0]);
+            // console.log("Name value:", data[0]['name']);
 
             var disp = data[0];
 

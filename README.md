@@ -10,15 +10,20 @@ This project is to show the crud operation using Laravel. This operation is to r
 2. Start xampp (apache and mysql)
 
 3. **Copy Environment Configuration**
-    - Run the command `cp .env.example .env` to create a `.env` file based on the example.
+    - Run the command `copy .env.example .env` to create a `.env` file based on the example.
     - Open the `.env` file and locate the `DB_DATABASE` parameter.
     - Set the `DB_DATABASE` parameter value to `crud-sample` to match the imported database.
 
-4. Run php artisan create:db
 
-5. Run php artisan migrate 
+4. Run `composer install`
 
-6. Run php artisan serve
+5. Run `php artisan key:generate`
+
+4. Run `php artisan create:db`
+
+5. Run `php artisan migrate` 
+
+6. Run `php artisan serve`
 
 ### Download xampp 8.1.25
 

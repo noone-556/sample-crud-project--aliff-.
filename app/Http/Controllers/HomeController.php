@@ -56,7 +56,7 @@ class HomeController extends Controller
     {
         $id = $request['id'];
 
-        $list_data = Employee::all();
+        $list_data = Employee::where('id', $id)->get();
         
         return  $list_data;
     }
