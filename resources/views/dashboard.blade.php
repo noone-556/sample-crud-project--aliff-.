@@ -7,7 +7,6 @@
             <!-- Page Heading -->
             <div class="card shadow mb-4 ">
                 <div class="card-header py-3">
-                    <!-- <img class="img-responsive" width="100%" src="{{ config('app.header') }}" /> -->
                 </div>
                 <div class="card-body">
                     <form class="form-inline">
@@ -36,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- var dari Homecontroller -->
+                                <!-- $list_employees dari Homecontroller -->
                                 <?php $count = 0;?>
                                 @forelse($list_employees as $app)
                                 <tr>
@@ -186,26 +185,25 @@ $(document).ready(function() {
             $('#endDate').css('cursor', 'not-allowed');
         }
     });
-    $('#typeCon').trigger('change');
+    // $('#typeCon').trigger('change');
 });
 
-//kemaskini disable end date tetap (kemaskiniMaklumat.blade.php)
+//kemaskini disable end date for tetap (kemaskiniMaklumat.blade.php)
 $(document).ready(function() {
     $('#eType').on('change', function() {
         var contractType = $(this).val();
         
-        if (contractType === 'TETAP') {
+        if (contractType == 'TETAP') {
             $('#eEnd').prop('disabled', true);
-            $('#eEnd').val(''); // Clear the value
-            // $('#eEnd').css('background-color', '#e9ecef'); 
+            $('#eEnd').val('');
             $('#eEnd').css('cursor', 'not-allowed');
-        } else if (contractType === 'KONTRAK') {
+        } else if (contractType == 'KONTRAK') {
             $('#eEnd').prop('disabled', false);
             $('#eEnd').css('background-color', ''); 
             $('#eEnd').css('cursor', '');
         } 
     });
-    $('#eType').trigger('change');
+    // $('#eType').trigger('change');
 });
 
 /** Untuk check tarikh akhir tidak kurang daripada tarikh mula */
@@ -216,7 +214,7 @@ $("#startDate").on("change", function () {
 
 });
 
-// <!-- daftar pekerja -->
+// <!-- form daftar pekerja (daftarUsers.blade.php)-->
 $(document).ready(function() {
     // console.log("jQuery is loaded!");
     
@@ -226,6 +224,14 @@ $(document).ready(function() {
         var form = this;
         var email = $("#empEmail").val();
         var empID = $("#empID").val();
+        var typeCon = $("#typeCon").val();
+        var endDate = $("#endDate").val();
+
+        // VALIDATE: If contract type is KONTRAK, end date must be filled
+        if (typeCon === "KONTRAK" && !endDate) {
+            toastr.error("Tarikh Akhir wajib diisi untuk jenis kontrak KONTRAK!");
+            return false;
+        }
 
         $.ajaxSetup({
             headers: {
@@ -263,7 +269,7 @@ $(document).ready(function() {
                                         return;
                                     }
 
-                                    // SUBMIT FORM
+                                    // SUBMIT FORM AND INSERT TO DB
                                     var formData = $(form).serialize();
 
                                     $.ajax({
@@ -271,9 +277,17 @@ $(document).ready(function() {
                                         type: 'POST',
                                         data: formData,
                                         success: function (response) {
-                                            toastr.success("Data berjaya disimpan!");
-                                            $('#daftarModal').modal('hide');
-                                            location.reload();
+                                            console.log("response", response);
+
+                                            if (response.success) {
+                                                toastr.success("Data berjaya disimpan!");
+                                                $('#daftarModal').modal('hide');
+                                                
+                                                // Wait for modal to fully hide before reloading
+                                                setTimeout(function() {
+                                                    location.reload();
+                                                }, 3000);
+                                            }
                                         },
 
                                         error: function (xhr, status, error) {
@@ -338,8 +352,6 @@ $(function(){
 
             // console.log("Raw data:", data);
             // console.log("Data type:", typeof data);
-            // console.log("First element:", data[0]);
-            // console.log("Name value:", data[0]['name']);
 
             var disp = data[0];
 
@@ -395,7 +407,6 @@ $(function(){
         //paparanKemaskini
         $("#tableSenarai").on("click", ".kemaskiniModal", function(){
 
-
             var id = $(this).attr('data-id');
 
                 $.ajax({
@@ -422,7 +433,7 @@ $(function(){
                     $("#ePos").val(position);
                     $("#eType").val(typeCon);
                     $("#eStart").val(startdate);
-                     $("#eEmail").val(email);
+                    $("#eEmail").val(email);
 
                     if (endDate == null) {
                         $("#eEnd").val(endDate);
@@ -438,6 +449,9 @@ $(function(){
                         $modal.find('#eStatus').prop('checked', false);
                         $modal.find('#eStatusText').text('Tidak Aktif');
                     }
+
+                    //execute the change event handler
+                    $('#eType').trigger('change');
 
                     $('#kemaskiniModal').modal('show');
                     
@@ -491,7 +505,7 @@ $(function(){
                     });
                     setTimeout( function () {
                     window.location.reload(true);
-                    }, 140000);
+                    }, 2200);
                 }
             }
         });
@@ -590,8 +604,8 @@ $(function(){
     //validate email input
     function ValidateEmail(inputText) {
 
-    // Email regex
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        // Email regex
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
         if (inputText.value.match(mailformat)) {
             inputText.setCustomValidity(""); // valid → clear error

@@ -17,7 +17,8 @@ This project is to show the crud operation using Laravel. This operation is to r
 
 4. Run `composer install`
     - If getting an error `composer not found` then you need to manually download the composer at this link https://getcomposer.org/download/  
-    - After finish then restart your notebook and run back the command
+    - After finish then restart your notebook and run back the command.
+    -if succeed can proceed below, if not check environment variables 
 
 5. Run `php artisan key:generate`
 

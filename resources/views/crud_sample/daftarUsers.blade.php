@@ -53,7 +53,7 @@
                     <td>Jawatan:</td>
                     <td>
                         <input type="text" class="form-control" id="roleEMP" name="roleEMP" 
-                                onkeyup="this.value = this.value.toUpperCase();" required/>
+                        onkeyup="this.value = this.value.toUpperCase();" required/>
                     </td>
                 </tr>
 

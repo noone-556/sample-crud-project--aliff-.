@@ -30,7 +30,7 @@
                 <td id="EMPSTARTDATE" style="white-space: nowrap;"></td>
             </tr>
             <tr>
-                <td style="white-space: nowrap;">Tarikh AKHIR:</td>
+                <td style="white-space: nowrap;">Tarikh Akhir:</td>
                 <td id="EMPENDDATE" style="white-space: nowrap;"></td>
             </tr>
             <tr>
