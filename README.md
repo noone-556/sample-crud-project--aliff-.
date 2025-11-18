@@ -27,6 +27,7 @@ This project is to show the crud operation using Laravel. This operation is to r
 
 6. Run `php artisan create:db`
     - Create database at mysql
+    - You can check this at app/Console/Command/CreateDatabase.php
 
 7. Run `php artisan migrate` 
     - Generate table for the database
