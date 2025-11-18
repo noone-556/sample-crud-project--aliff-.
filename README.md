@@ -61,13 +61,12 @@ This project is to show the crud operation using Laravel. This operation is to r
 
 - Ajax was used for fetch, insert, update and delete record.
 
-- Using datatables with pagination and search.
+- Using datatables for pagination and search.
 
 
 ## Challenges
 
 - Ensure proper validation for date fields and contract types required extra checks because there is insert and update operations. Both operation need to be same so the submit value will not be in conflict during backend process
 
-- To handle delete operations so it can delete based on id provided and not other record.
+- Handling dynamic enabling /disabling for kemaskini and insert end date. Insert end date logic work correctly but kemaskini eEnd encountered some conflict because the modal load existing values first. After change the value then it will trigger the dynamic enabling and disabling.
 
-- 

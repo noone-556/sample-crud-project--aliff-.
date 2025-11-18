@@ -208,7 +208,6 @@ $(document).ready(function() {
             $('#endDate').css('cursor', 'not-allowed');
         }
     });
-    // $('#typeCon').trigger('change');
 });
 
 //kemaskini disable end date for tetap (kemaskiniMaklumat.blade.php)
@@ -238,17 +237,17 @@ $("#startDate").on("change", function () {
 
 /** Untuk check tarikh akhir tidak kurang daripada tarikh mula (kemaskini)*/
 $(document).on('shown.bs.modal', '#kemaskiniModal', function() {
-    var startDate = $("#eStart").val(); // Get value loaded from backend
+    
+    var startDate = $("#eStart").val(); 
     if (startDate) {
-        $("#eEnd").attr("min", startDate); // Set minimum allowed end date
+        $("#eEnd").attr("min", startDate); 
     }
 
 });
 
 
-// <!-- form daftar pekerja (daftarUsers.blade.php)-->
+// <!-- form submit daftar pekerja (daftarUsers.blade.php)-->
 $(document).ready(function() {
-    // console.log("jQuery is loaded!");
     
     $("#formMaklumatPekerja").on("submit", function (e) {
         e.preventDefault(); // prevent double submission
@@ -271,6 +270,7 @@ $(document).ready(function() {
             }
         });
 
+        //using try catch block to catch any exception occur during checking before and after the API CALL
         try {
 
             // CHECK EMPLOYEE ID
@@ -280,8 +280,9 @@ $(document).ready(function() {
                 data: { EMPID: empID },
                 dataType: 'JSON',
                 success: function (data) {
+                    
                     try {
-
+                        //found more than 0 then return error
                         if (data > 0) {
                             toastr.error("Nombor ID pekerja telah digunakan.");
                             return;
@@ -294,6 +295,7 @@ $(document).ready(function() {
                             data: { EMAIL: email },
                             dataType: 'JSON',
                             success: function (data) {
+                                
                                 try {
 
                                     if (data > 0) {
@@ -301,9 +303,10 @@ $(document).ready(function() {
                                         return;
                                     }
 
-                                    // SUBMIT FORM AND INSERT TO DB
+                                    //convert to URL-encoded string 
                                     var formData = $(form).serialize();
 
+                                    // SUBMIT FORM AND INSERT TO DB
                                     $.ajax({
                                         url: '/daftar-pekerja',
                                         type: 'POST',
@@ -366,8 +369,8 @@ $(document).ready(function() {
 
 
 <script>
+//paparan untuk lihatMaklumat modal
 $(function(){
-    //paparanMaklumat
     $("#tableSenarai").on("click", ".lihatMaklumatModal", function(){
 
         var id = $(this).attr('data-id');
@@ -398,7 +401,7 @@ $(function(){
             var phone = disp['phone'];
             var status = disp['status'];
 
-
+            //display value at table id and row id
             setValArray('#tableLihatMaklumat #EMPNAME', nama);
             setValArray('#tableLihatMaklumat #EMPID', empID);
             setValArray('#tableLihatMaklumat #EMPEMAIL', email);
@@ -407,19 +410,19 @@ $(function(){
             setValArray('#tableLihatMaklumat #EMPSTARTDATE', startdate);
             setValArray('#tableLihatMaklumat #EMPENDDATE', endDate);
             
+            //instead of blank, show '-'
             if (phone == null) {
                 setValArray('#tableLihatMaklumat #EMPPHONE', '-');
             } else {
                 setValArray('#tableLihatMaklumat #EMPPHONE', phone);
             }
 
+            //1 = Aktif, 0= Tidak Aktif
             if (status == 1) {
                 setValArray('#tableLihatMaklumat #EMPSTATUS', 'AKTIF');
             } else {
                 setValArray('#tableLihatMaklumat #EMPSTATUS', 'TIDAK AKTIF');
             }
-
-
 
             $('#lihatMaklumatModal').modal('show');
         },
@@ -431,12 +434,12 @@ $(function(){
     
         
     });
-}); //end paparanMaklumat
+}); 
+//end paparanMaklumat
 
-
-
+     //paparan kemaskini maklumat modal
     $(function(){
-        //paparanKemaskini
+       
         $("#tableSenarai").on("click", ".kemaskiniModal", function(){
 
             var id = $(this).attr('data-id');
@@ -458,6 +461,7 @@ $(function(){
                     var endDate = disp['end_date'];
                     var phone = disp['phone'];
                     var status = disp['status'];
+                    //contains jquery object
                     var $modal = $('#kemaskiniModal');
 
                     $("#eNama").val(nama);
@@ -474,7 +478,6 @@ $(function(){
                     }
 
                     if (status == 1) {
-                        // $("#eStatus").val('Aktif');
                         $modal.find('#eStatus').prop('checked', true);
                         $modal.find('#eStatusText').text('Aktif');
                     } else {
@@ -482,15 +485,17 @@ $(function(){
                         $modal.find('#eStatusText').text('Tidak Aktif');
                     }
 
-                    //execute the change event handler
+                    //execute the change event handler (disable end date tetap for kemaskini)
                     $('#eType').trigger('change');
 
+                    // showing the modal after click button
                     $('#kemaskiniModal').modal('show');
                     
                 }
             })        
         });
-    }); //end paparanKemaskini
+    }); 
+    //end paparanKemaskini
 
     //submit form kemaskini
     $('#formKemaskiniPekerja').on("submit", function(){
@@ -513,6 +518,7 @@ $(function(){
 
                 }else{
 
+                    //contain array of object 
                     var formData = $('#formKemaskiniPekerja').serializeArray();
                     
                     var statusExists = formData.some(function(item) {
@@ -567,6 +573,7 @@ $(function(){
         let id = $(this).data('id');
         console.log("id", id)
 
+        // pass the specific id for the record
         $.ajax({
             url: '/padam-maklumat/' + id,
             type: 'DELETE',
@@ -590,7 +597,7 @@ $(function(){
 
 <script>
 
-    //to make the kemaskini input display in database format
+    //to make the kemaskini date input display in database format
     $("#eStart, #eEnd").on("focus", function () {
         let val = $(this).val();
 
@@ -643,7 +650,7 @@ $(function(){
         }
     }
 
-    //to change text at kemaskini status
+    //to change prop status at kemaskini
     $(document).ready(function() {
         $('#eStatus').change(function() {
             if ($(this).is(':checked')) {
@@ -656,6 +663,8 @@ $(function(){
         });
     });
 
+
+    // datatable custom pagination
     $(document).ready(function() {
         $('#tableSenarai').DataTable({
             "paging": true,

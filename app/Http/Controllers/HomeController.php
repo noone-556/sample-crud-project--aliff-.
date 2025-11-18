@@ -39,7 +39,7 @@ class HomeController extends Controller
         $app->phone = $input['empPhone'];
         $app->start_date = $input['startDate'];
         
-        // if tetap then end date can be null, else (kontrak) then end date will be required
+        // if (TETAP) end date can be null, else (KONTRAK) then end date will be required
         if ($input['typeCon'] == "TETAP") {
             $app->end_date = null;
         } else {
@@ -57,7 +57,7 @@ class HomeController extends Controller
         ]);
     }
 
-    //to retrieve maklumat and display at Lihat Maklumat Modal based on id for each user
+    //to retrieve maklumat and display at Lihat Maklumat Modal based on id
     public function getMaklumat(Request $request)
     {
         $id = $request['id'];
